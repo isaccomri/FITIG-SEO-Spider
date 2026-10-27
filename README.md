@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.48**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.49**.
 
 ## Status
 
-193 of 206 tracked entries (93.7%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
+194 of 206 tracked entries (94.2%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.48 release was checked with 327 automated tests and 122 installed native assertions across 6 targeted suites. These historical results are recorded in the release notes; they are not claims that all these checks run in CI. Integrations requiring accounts, complete Hebrew translation, form login, AI/semantic services and signed packaging remain incomplete. Local security policies and antivirus exclusions are not required build steps.
+The local 0.1.49 release was checked with 334 automated tests and 140 installed native assertions across 7 targeted suites. These historical results are recorded in the release notes; they are not claims that all these checks run in CI. Integrations requiring accounts, complete Hebrew translation, form login, AI/semantic services and signed packaging remain incomplete. Local security policies and antivirus exclusions are not required build steps.
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[0.1.48 evidence and practical limits](docs/release-0.1.48.md): imported-vector semantic search with compatible model identifiers, cosine ranking, similar-URL queries, thresholds, saved corpus/report, Hebrew CSV and CLI commands. No embedding generation, model download or API request is performed by this feature. Semantic relevance and provider provenance are not certified. Source updates do not imply a successful new GitHub CI run; read the commit checks separately.
+[0.1.49 evidence and practical limits](docs/release-0.1.49.md): reviewed current-table Google Sheets export with typed values, original/readable Hebrew URL columns and RTL layout. New-sheet creation requires explicit upload consent and a manual authorized OAuth access token. HTTP contract and rejected-preflight paths are tested; no live Google spreadsheet was created during acceptance. Live-account verification, OAuth sign-in/refresh and large-export chunking remain pending. Read the commit's CI checks separately from local release evidence.

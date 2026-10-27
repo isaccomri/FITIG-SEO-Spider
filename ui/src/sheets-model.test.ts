@@ -1,0 +1,5 @@
+import {it,expect} from 'vitest';
+import {sheetInput} from './sheets-model';
+it('exports the supplied filtered order with typed observations and readable/original Hebrew identities',()=>{const result=sheetInput('דוח',['title','status','url'],[{url:'https://e.test/%D7%A9',title:'=2+2',status:200}],{title:'Title',status:'Status',url:'Address'},true);expect(result.rows).toEqual([['=2+2',200,'https://e.test/ש','https://e.test/%D7%A9']]);expect(result.right_to_left).toBe(true);expect(result.headers).toEqual(['Title','Status','Address','Address (Original)'])});
+it('keeps unknown numeric values blank and avoids precision loss for large integers',()=>{const result=sheetInput('test',['status','word_count'],[{url:'https://e.test/',word_count:9007199254740992}],{},false);expect(result.rows[0]).toEqual([null,'9007199254740992','https://e.test/'])});
+it('rejects empty tables and oversized cell counts before mapping export data',()=>{expect(()=>sheetInput('test',['url'],[],{},false)).toThrow('at least one');expect(()=>sheetInput('test',['url'],Array(5000).fill({url:'https://e.test/'}),{},false)).toThrow('10,000')});

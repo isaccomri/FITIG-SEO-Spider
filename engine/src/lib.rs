@@ -1,3 +1,4 @@
+pub mod google_sheets;
 pub mod semantic;
 use rusqlite::{params, Connection, OptionalExtension};
 use scraper::{Html, Selector};
@@ -124,7 +125,7 @@ pub struct CrawlOptions { pub url: String, pub db: String, pub limit: usize, pub
 #[derive(Debug,Clone,Serialize,Deserialize,PartialEq,Eq)]
 #[serde(default)]
 pub struct CrawlProfile {pub request_timeout_secs:u64,pub concurrency:usize,pub custom_rules:Vec<CustomRule>,pub store_html:bool,pub check_external:bool,pub subdomain_root:String,pub http_auth_origin:String,pub cookies_enabled:bool,pub proxy_mode:String,pub proxy_url:String,pub proxy_bypass:String,pub proxy_auth_required:bool,pub url_rewriting:rewriting::Options,pub max_depth:usize,pub include_patterns:Vec<String>,pub exclude_patterns:Vec<String>,pub user_agent:String,pub rendering:render::Rendering}
-impl Default for CrawlProfile{fn default()->Self{Self{request_timeout_secs:20,concurrency:5,custom_rules:Vec::new(),store_html:true,check_external:false,subdomain_root:String::new(),http_auth_origin:String::new(),cookies_enabled:false,proxy_mode:"automatic".into(),proxy_url:String::new(),proxy_bypass:String::new(),proxy_auth_required:false,url_rewriting:Default::default(),max_depth:0,include_patterns:Vec::new(),exclude_patterns:Vec::new(),user_agent:"FITIGBot/0.1.48".into(),rendering:Default::default()}}}
+impl Default for CrawlProfile{fn default()->Self{Self{request_timeout_secs:20,concurrency:5,custom_rules:Vec::new(),store_html:true,check_external:false,subdomain_root:String::new(),http_auth_origin:String::new(),cookies_enabled:false,proxy_mode:"automatic".into(),proxy_url:String::new(),proxy_bypass:String::new(),proxy_auth_required:false,url_rewriting:Default::default(),max_depth:0,include_patterns:Vec::new(),exclude_patterns:Vec::new(),user_agent:"FITIGBot/0.1.49".into(),rendering:Default::default()}}}
 pub fn validate_request_timeout(seconds:u64)->Result<()>{if !(1..=300).contains(&seconds){return Err("HTTP request timeout must be between 1 and 300 seconds".into())}Ok(())}
 pub fn project_profile(db:&str)->Result<CrawlProfile>{let value:Option<String>=open_read(db)?.query_row("SELECT value FROM metadata WHERE key='profile'",[],|r|r.get(0)).optional()?;Ok(match value{Some(v)=>serde_json::from_str(&v)?,None=>CrawlProfile::default()})}
 pub fn project_sitemaps(db:&str)->Result<Option<serde_json::Value>>{let value:Option<String>=open_read(db)?.query_row("SELECT value FROM metadata WHERE key='sitemaps'",[],|r|r.get(0)).optional()?;value.map(|v|serde_json::from_str(&v).map_err(Into::into)).transpose()}
