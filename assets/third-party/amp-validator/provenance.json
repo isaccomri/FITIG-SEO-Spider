@@ -1,0 +1,9 @@
+{
+  "source": "https://cdn.ampproject.org/v0/validator_wasm.js",
+  "retrieved_utc": "2026-10-23T12:59:56.737986+00:00",
+  "sha256": "f1f4629ab36f555f5a9937a5cf00f0ef780bf025883c035d06389b151c896f26",
+  "bytes": 4012235,
+  "license": "Apache-2.0",
+  "upstream": "https://github.com/ampproject/amphtml",
+  "mode": "Pinned offline snapshot; no automatic updates"
+}

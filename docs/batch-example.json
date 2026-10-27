@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "name": "סריקה לדוגמה",
+      "url": "https://example.com/",
+      "limit": 0,
+      "delay_ms": 200,
+      "concurrency": 5
+    }
+  ],
+  "exports": [
+    "csv",
+    "html",
+    "xlsx",
+    "sitemap"
+  ],
+  "continue_on_error": false
+}

@@ -1,0 +1,14 @@
+{
+  "name": "fitig-seo-spider",
+  "private": true,
+  "version": "0.1.47",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "test:engine": "cargo test --manifest-path engine/Cargo.toml",
+    "test:ui": "npm --prefix ui test"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

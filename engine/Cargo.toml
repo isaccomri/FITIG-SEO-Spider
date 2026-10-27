@@ -1,0 +1,35 @@
+[package]
+name = "fitig-engine"
+version = "0.1.47"
+edition = "2021"
+
+[dependencies]
+zip = { version = "2", default-features = false, features = ["deflate"] }
+cookie_store = "=0.22.0"
+publicsuffix = "=2.3.0"
+httpdate = "=1.0.3"
+time = { version = "=0.3.55", features = ["formatting"] }
+base64 = "0.22"
+tokio = { version = "1.53", features = ["rt-multi-thread", "time", "sync", "net"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls", "cookies"] }
+scraper = "0.21"
+url = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.32", features = ["bundled", "backup"] }
+sha2 = "0.10"
+csv = "1"
+regex = "1"
+percent-encoding = "2"
+sxd-document = "0.3.2"
+sxd-xpath = "0.4.2"
+rust_xlsxwriter = { version = "0.99", optional = true }
+encoding_rs = "0.8"
+flate2 = "1"
+
+[features]
+default = ["xlsx"]
+xlsx = ["dep:rust_xlsxwriter"]
+
+[dev-dependencies]
+socket2 = "0.6"

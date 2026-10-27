@@ -1,0 +1,10 @@
+import {NativeFileBrowse} from './NativeFileBrowse';
+import React,{useState,useEffect} from 'react';
+import {invoke} from '@tauri-apps/api/core';
+type Screenshot={width:number;height:number;data_url:string};
+export function ScreenshotView({url,captureError}:{url:string;captureError?:string}){
+ const [image,setImage]=useState<Screenshot|null|undefined>(),[error,setError]=useState(''),[zoom,setZoom]=useState('fit'),[path,setPath]=useState(''),[notice,setNotice]=useState('');
+ useEffect(()=>{let active=true;setImage(undefined);setError('');setNotice('');invoke<Screenshot|null>('get_screenshot',{url}).then(value=>{if(active)setImage(value)}).catch(error=>{if(active)setError(String(error))});return()=>{active=false}},[url]);
+ async function save(){setError('');try{await invoke('export_screenshot',{url,path});setNotice('Saved: '+path)}catch(error){setError(String(error))}}
+ return <section aria-label="Saved rendered screenshot">{captureError&&<p role="alert">Capture failed: {captureError}</p>}{error&&<p role="alert">{error}</p>}{image===undefined?<p>Loading saved screenshot…</p>:image===null?<p>No saved screenshot for this URL. Enable JavaScript rendering and Capture rendered screenshot, then run a new crawl.</p>:<><div className="screenshot-tools"><span>{image.width} × {image.height} pixels</span><label>Screenshot zoom<select aria-label="Screenshot zoom" value={zoom} onChange={event=>setZoom(event.target.value)}><option value="fit">Fit width</option><option value="50">50%</option><option value="100">100%</option><option value="200">200%</option></select></label><label>Screenshot PNG path<input dir="ltr" value={path} onChange={event=>setPath(event.target.value)}/></label><NativeFileBrowse kind="export_png" value={path} onChoose={setPath}/><button disabled={!path} onClick={()=>void save()}>Export screenshot PNG</button></div><div className="screenshot-canvas"><img alt="Saved rendered page screenshot" src={image.data_url} style={zoom==='fit'?{maxWidth:'100%',height:'auto'}:{width:image.width*Number(zoom)/100,maxWidth:'none',height:'auto'}}/></div>{notice&&<p role="status">{notice}</p>}</>}</section>
+}

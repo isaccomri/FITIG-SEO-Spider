@@ -1,0 +1,10 @@
+import {displayUrl} from './model';
+export type CompareValues=Record<string,unknown>;
+export type CompareRow={url:string;change:'Added'|'Removed'|'Changed'|'Unchanged';fields:string[];baseline:CompareValues|null;current:CompareValues|null};
+export type CompareReport={current_path:string;baseline_path:string;current_seed:string;baseline_seed:string;counts:Record<string,number>;rows:CompareRow[];note:string};
+export function compareValue(values:CompareValues|null,key:string){if(values==null||values[key]==null)return '';const value=values[key];return typeof value==='string'?value:typeof value==='object'?JSON.stringify(value):String(value)}
+export function filterComparison(rows:CompareRow[],change:string,field:string,search:string){const query=search.trim().toLocaleLowerCase();return rows.filter(row=>(change==='All'||change==='Changes'&&row.change!=='Unchanged'||row.change===change)&&(field==='All fields'||row.fields.includes(field))&&(!query||displayUrl(JSON.stringify(row)).toLocaleLowerCase().includes(query)))}
+export const compareHeaders=['Address','Change','Changed Fields','Baseline Status','Current Status','Baseline Title','Current Title','Baseline Words','Current Words','Address (Original)'];
+export function compareCells(row:CompareRow){return [displayUrl(row.url),row.change,row.fields.join('; '),compareValue(row.baseline,'status'),compareValue(row.current,'status'),compareValue(row.baseline,'title'),compareValue(row.current,'title'),compareValue(row.baseline,'word_count'),compareValue(row.current,'word_count'),row.url]}
+export const differenceHeaders=['Address','Change','Field','Baseline Value','Current Value','Address (Original)'];
+export function differenceRows(rows:CompareRow[]){return rows.flatMap(row=>{const keys=row.change==='Unchanged'?[]:row.change==='Changed'?row.fields:[...new Set([...Object.keys(row.baseline??{}),...Object.keys(row.current??{})])].sort();return keys.map(key=>[displayUrl(row.url),row.change,key,compareValue(row.baseline,key),compareValue(row.current,key),row.url])})}

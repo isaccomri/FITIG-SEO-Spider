@@ -1,0 +1,16 @@
+node_modules/
+target/
+dist/
+acceptance/
+work/
+.env*
+*.sqlite*
+*.db
+*.seospider
+*.har
+*.log
+*.stop
+*.tsbuildinfo
+*.pfx
+*.key
+*.pem

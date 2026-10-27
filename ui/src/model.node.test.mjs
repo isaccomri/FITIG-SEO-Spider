@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {selectPages,getCell,columnsFor} from './model.ts';
+test('filters errors and searches without case sensitivity',()=>assert.equal(selectPages([{url:'https://e.test/A',status_code:404},{url:'https://e.test/b',status:200}],'Internal','Errors (4xx–5xx)','/a').length,1));
+test('accepts metadata aliases',()=>assert.equal(getCell({url:'x',meta_description:'hello'},'description'),'hello'));
+test('missing title filter includes absent fields',()=>assert.equal(selectPages([{url:'x'}],'Page Titles','Missing','').length,1));
+test('internal excludes external records',()=>assert.equal(selectPages([{url:'x',internal:false}],'Internal','All','').length,0));
+test('canonical category exposes canonical column',()=>assert.ok(columnsFor('Canonicals').includes('canonical')));
+test('missing content types do not crash image filtering',()=>assert.equal(selectPages([{url:'x'}],'Images','All','').length,0));
+test('empty crawl yields empty results',()=>assert.deepEqual(selectPages([],'Internal','All',''),[]));

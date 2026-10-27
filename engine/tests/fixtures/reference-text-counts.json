@@ -1,0 +1,1515 @@
+{
+  "source": "Installed unmodified Screaming Frog CLI, explicit local fixture server",
+  "origin": "http://127.0.0.1:49210",
+  "cases": {
+    "plain": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>plain</title><body>one two three</body>",
+      "expected_words": 3
+    },
+    "punctuation": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>punctuation</title><body>one,two three.four five/six seven:eight nine;ten</body>",
+      "expected_words": 5
+    },
+    "hyphens": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>hyphens</title><body>one-two one–two one—two</body>",
+      "expected_words": 3
+    },
+    "hebrew": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>hebrew</title><body>שלום-עולם שלום־עולם שלום/עולם</body>",
+      "expected_words": 3
+    },
+    "inline": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>inline</title><body><span>one</span><span>two</span><span>three</span></body>",
+      "expected_words": 3
+    },
+    "blocks": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>blocks</title><body><div>one</div><div>two</div><p>three</p></body>",
+      "expected_words": 3
+    },
+    "br": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>br</title><body>one<br>two<br>three</body>",
+      "expected_words": 3
+    },
+    "entities": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>entities</title><body>one&nbsp;two &amp; three &copy; four</body>",
+      "expected_words": 6
+    },
+    "numbers": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>numbers</title><body>one 123 12.3 10% € $ + - / &amp;</body>",
+      "expected_words": 10
+    },
+    "hidden": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>hidden</title><body><div hidden>hidden text</div><div style=\"display:none\">invisible text</div><p>visible text</p></body>",
+      "expected_words": 6
+    },
+    "nav": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>nav</title><body><nav>menu one</nav><main>main two three</main><footer>bottom four</footer></body>",
+      "expected_words": 3
+    },
+    "roles": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>roles</title><body><div role=\"navigation\">menu one</div><main>main two three</main><div role=\"contentinfo\">bottom four</div></body>",
+      "expected_words": 7
+    },
+    "alt": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>alt</title><body><p>one two</p><img src=\"/image.png\" alt=\"three four\"></body>",
+      "expected_words": 2
+    },
+    "lists": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>lists</title><body><ul><li>one</li><li>two three</li></ul></body>",
+      "expected_words": 5
+    },
+    "script": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>script</title><body><script>let word=\"secret text\";</script><style>.word{color:red}</style><noscript>noscript text</noscript><template>template text</template>one two</body>",
+      "expected_words": 2
+    },
+    "table": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>table</title><body><table><tr><td>one</td><td>two</td></tr></table></body>",
+      "expected_words": 2
+    },
+    "symbols": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbols</title><body>one &amp; two | three - four — five • six … seven !!!</body>",
+      "expected_words": 13
+    },
+    "newline": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>newline</title><body>one\ntwo\tthree\r\nfour</body>",
+      "expected_words": 4
+    },
+    "cjk": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>cjk</title><body>你好世界 这是测试</body>",
+      "expected_words": 2
+    },
+    "joinmarkup": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>joinmarkup</title><body>hello<strong>world</strong> next<span>word</span></body>",
+      "expected_words": 2
+    },
+    "form": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>form</title><body><input value=\"foo bar\"><textarea>one two</textarea><button>three four</button></body>",
+      "expected_words": 2
+    },
+    "nested": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>nested</title><body>hello<b> bold</b>word</body>",
+      "expected_words": 2
+    },
+    "decimal": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>decimal</title><body>one 1,000 1.25 1/2 12:30 2026-10-17</body>",
+      "expected_words": 6
+    },
+    "onlysymbols": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>onlysymbols</title><body>&amp; | - — • … !!! + / $ €</body>",
+      "expected_words": 10
+    },
+    "symbol_0": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_0</title><body>&amp;</body>",
+      "expected_words": 1
+    },
+    "symbol_1": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_1</title><body>|</body>",
+      "expected_words": 0
+    },
+    "symbol_2": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_2</title><body>-</body>",
+      "expected_words": 1
+    },
+    "symbol_3": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_3</title><body>—</body>",
+      "expected_words": 1
+    },
+    "symbol_4": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_4</title><body>•</body>",
+      "expected_words": 1
+    },
+    "symbol_5": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_5</title><body>…</body>",
+      "expected_words": 1
+    },
+    "symbol_6": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_6</title><body>!!!</body>",
+      "expected_words": 1
+    },
+    "symbol_7": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_7</title><body>+</body>",
+      "expected_words": 1
+    },
+    "symbol_8": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_8</title><body>/</body>",
+      "expected_words": 1
+    },
+    "symbol_9": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_9</title><body>$</body>",
+      "expected_words": 1
+    },
+    "symbol_10": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_10</title><body>€</body>",
+      "expected_words": 1
+    },
+    "symbol_11": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>symbol_11</title><body>*</body>",
+      "expected_words": 1
+    },
+    "span_b": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>span_b</title><body><span>one</span><b>two</b></body>",
+      "expected_words": 1
+    },
+    "b_span": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>b_span</title><body><b>one</b><span>two</span></body>",
+      "expected_words": 1
+    },
+    "span_i": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>span_i</title><body><span>one</span><i>two</i></body>",
+      "expected_words": 1
+    },
+    "b_i": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>b_i</title><body><b>one</b><i>two</i></body>",
+      "expected_words": 1
+    },
+    "span_comment": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>span_comment</title><body><span>one</span><!--comment--><span>two</span></body>",
+      "expected_words": 1
+    },
+    "span_comma": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>span_comma</title><body><span>one</span>,<span>two</span></body>",
+      "expected_words": 1
+    },
+    "span_tail": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>span_tail</title><body><span>one</span>two</body>",
+      "expected_words": 1
+    },
+    "head_span": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>head_span</title><body>one<span>two</span></body>",
+      "expected_words": 1
+    },
+    "ordered": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>ordered</title><body><ol><li>one</li><li>two three</li></ol></body>",
+      "expected_words": 5
+    },
+    "tag_span": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_span</title><body>one<span>two</span>three</body>",
+      "expected_words": 1
+    },
+    "siblings_span": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_span</title><body><span>one</span><span>two</span></body>",
+      "expected_words": 2
+    },
+    "tag_b": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_b</title><body>one<b>two</b>three</body>",
+      "expected_words": 1
+    },
+    "siblings_b": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_b</title><body><b>one</b><b>two</b></body>",
+      "expected_words": 1
+    },
+    "tag_strong": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_strong</title><body>one<strong>two</strong>three</body>",
+      "expected_words": 1
+    },
+    "siblings_strong": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_strong</title><body><strong>one</strong><strong>two</strong></body>",
+      "expected_words": 1
+    },
+    "tag_em": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_em</title><body>one<em>two</em>three</body>",
+      "expected_words": 1
+    },
+    "siblings_em": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_em</title><body><em>one</em><em>two</em></body>",
+      "expected_words": 1
+    },
+    "tag_i": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_i</title><body>one<i>two</i>three</body>",
+      "expected_words": 1
+    },
+    "siblings_i": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_i</title><body><i>one</i><i>two</i></body>",
+      "expected_words": 1
+    },
+    "tag_a": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_a</title><body>one<a>two</a>three</body>",
+      "expected_words": 1
+    },
+    "siblings_a": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_a</title><body><a>one</a><a>two</a></body>",
+      "expected_words": 2
+    },
+    "tag_code": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_code</title><body>one<code>two</code>three</body>",
+      "expected_words": 1
+    },
+    "siblings_code": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_code</title><body><code>one</code><code>two</code></body>",
+      "expected_words": 2
+    },
+    "tag_small": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_small</title><body>one<small>two</small>three</body>",
+      "expected_words": 1
+    },
+    "siblings_small": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_small</title><body><small>one</small><small>two</small></body>",
+      "expected_words": 1
+    },
+    "tag_label": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_label</title><body>one<label>two</label>three</body>",
+      "expected_words": 1
+    },
+    "siblings_label": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_label</title><body><label>one</label><label>two</label></body>",
+      "expected_words": 2
+    },
+    "tag_mark": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_mark</title><body>one<mark>two</mark>three</body>",
+      "expected_words": 1
+    },
+    "siblings_mark": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_mark</title><body><mark>one</mark><mark>two</mark></body>",
+      "expected_words": 1
+    },
+    "tag_sub": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_sub</title><body>one<sub>two</sub>three</body>",
+      "expected_words": 1
+    },
+    "siblings_sub": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_sub</title><body><sub>one</sub><sub>two</sub></body>",
+      "expected_words": 1
+    },
+    "tag_sup": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_sup</title><body>one<sup>two</sup>three</body>",
+      "expected_words": 1
+    },
+    "siblings_sup": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_sup</title><body><sup>one</sup><sup>two</sup></body>",
+      "expected_words": 1
+    },
+    "tag_u": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_u</title><body>one<u>two</u>three</body>",
+      "expected_words": 1
+    },
+    "siblings_u": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_u</title><body><u>one</u><u>two</u></body>",
+      "expected_words": 1
+    },
+    "tag_time": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_time</title><body>one<time>two</time>three</body>",
+      "expected_words": 1
+    },
+    "siblings_time": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_time</title><body><time>one</time><time>two</time></body>",
+      "expected_words": 1
+    },
+    "tag_q": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_q</title><body>one<q>two</q>three</body>",
+      "expected_words": 1
+    },
+    "siblings_q": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_q</title><body><q>one</q><q>two</q></body>",
+      "expected_words": 1
+    },
+    "tag_abbr": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_abbr</title><body>one<abbr>two</abbr>three</body>",
+      "expected_words": 1
+    },
+    "siblings_abbr": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_abbr</title><body><abbr>one</abbr><abbr>two</abbr></body>",
+      "expected_words": 1
+    },
+    "tag_button": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_button</title><body>one<button>two</button>three</body>",
+      "expected_words": 1
+    },
+    "siblings_button": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_button</title><body><button>one</button><button>two</button></body>",
+      "expected_words": 2
+    },
+    "tag_select": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_select</title><body>one<select>two</select>three</body>",
+      "expected_words": 1
+    },
+    "siblings_select": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_select</title><body><select>one</select><select>two</select></body>",
+      "expected_words": 0
+    },
+    "tag_option": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_option</title><body>one<option>two</option>three</body>",
+      "expected_words": 1
+    },
+    "siblings_option": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_option</title><body><option>one</option><option>two</option></body>",
+      "expected_words": 1
+    },
+    "tag_textarea": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>tag_textarea</title><body>one<textarea>two</textarea>three</body>",
+      "expected_words": 1
+    },
+    "siblings_textarea": {
+      "html": "<!doctype html><meta charset=\"utf-8\"><title>siblings_textarea</title><body><textarea>one</textarea><textarea>two</textarea></body>",
+      "expected_words": 0
+    },
+    "wrap-4-raw-0-0": {
+      "html": "<body>(one two</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-0-0": {
+      "html": "<body><span>(</span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-0-0": {
+      "html": "<body><strong><span>(</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-0-1": {
+      "html": "<body>(שלום עולם</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-0-1": {
+      "html": "<body><span>(</span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-0-1": {
+      "html": "<body><strong><span>(</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-0-2": {
+      "html": "<body>(בראשית ב</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-0-2": {
+      "html": "<body><span>(</span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-0-2": {
+      "html": "<body><strong><span>(</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-1-0": {
+      "html": "<body>\" (one two</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-1-0": {
+      "html": "<body><span>\" (</span><span>one two</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-1-0": {
+      "html": "<body><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-1-1": {
+      "html": "<body>\" (שלום עולם</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-1-1": {
+      "html": "<body><span>\" (</span><span>שלום עולם</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-1-1": {
+      "html": "<body><strong><span>\" (</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-1-2": {
+      "html": "<body>\" (בראשית ב</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-1-2": {
+      "html": "<body><span>\" (</span><span>בראשית ב</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-1-2": {
+      "html": "<body><strong><span>\" (</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-2-0": {
+      "html": "<body>( one two</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-2-0": {
+      "html": "<body><span>( </span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-2-0": {
+      "html": "<body><strong><span>( </span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-2-1": {
+      "html": "<body>( שלום עולם</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-2-1": {
+      "html": "<body><span>( </span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-2-1": {
+      "html": "<body><strong><span>( </span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-2-2": {
+      "html": "<body>( בראשית ב</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-2-2": {
+      "html": "<body><span>( </span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-2-2": {
+      "html": "<body><strong><span>( </span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-3-0": {
+      "html": "<body>one one two</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-3-0": {
+      "html": "<body><span>one </span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-3-0": {
+      "html": "<body><strong><span>one </span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-3-1": {
+      "html": "<body>one שלום עולם</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-3-1": {
+      "html": "<body><span>one </span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-3-1": {
+      "html": "<body><strong><span>one </span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-3-2": {
+      "html": "<body>one בראשית ב</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-3-2": {
+      "html": "<body><span>one </span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-3-2": {
+      "html": "<body><strong><span>one </span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-4-0": {
+      "html": "<body>oneone two</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-4-0": {
+      "html": "<body><span>one</span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-4-0": {
+      "html": "<body><strong><span>one</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-4-1": {
+      "html": "<body>oneשלום עולם</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-4-1": {
+      "html": "<body><span>one</span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-4-1": {
+      "html": "<body><strong><span>one</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-4-2": {
+      "html": "<body>oneבראשית ב</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-4-2": {
+      "html": "<body><span>one</span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-4-2": {
+      "html": "<body><strong><span>one</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-5-0": {
+      "html": "<body>a (one two</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-5-0": {
+      "html": "<body><span>a (</span><span>one two</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-5-0": {
+      "html": "<body><strong><span>a (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-5-1": {
+      "html": "<body>a (שלום עולם</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-5-1": {
+      "html": "<body><span>a (</span><span>שלום עולם</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-5-1": {
+      "html": "<body><strong><span>a (</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-5-2": {
+      "html": "<body>a (בראשית ב</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-5-2": {
+      "html": "<body><span>a (</span><span>בראשית ב</span></body>",
+      "expected_words": 4
+    },
+    "wrap-4-wrapped-5-2": {
+      "html": "<body><strong><span>a (</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-6-0": {
+      "html": "<body>)one two</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-6-0": {
+      "html": "<body><span>)</span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-6-0": {
+      "html": "<body><strong><span>)</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-6-1": {
+      "html": "<body>)שלום עולם</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-6-1": {
+      "html": "<body><span>)</span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-6-1": {
+      "html": "<body><strong><span>)</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-6-2": {
+      "html": "<body>)בראשית ב</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-6-2": {
+      "html": "<body><span>)</span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-6-2": {
+      "html": "<body><strong><span>)</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-7-0": {
+      "html": "<body>[one two</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-7-0": {
+      "html": "<body><span>[</span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-7-0": {
+      "html": "<body><strong><span>[</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-7-1": {
+      "html": "<body>[שלום עולם</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-7-1": {
+      "html": "<body><span>[</span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-7-1": {
+      "html": "<body><strong><span>[</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-7-2": {
+      "html": "<body>[בראשית ב</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-7-2": {
+      "html": "<body><span>[</span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-7-2": {
+      "html": "<body><strong><span>[</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-8-0": {
+      "html": "<body>{one two</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-8-0": {
+      "html": "<body><span>{</span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-8-0": {
+      "html": "<body><strong><span>{</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-8-1": {
+      "html": "<body>{שלום עולם</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-8-1": {
+      "html": "<body><span>{</span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-8-1": {
+      "html": "<body><strong><span>{</span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-8-2": {
+      "html": "<body>{בראשית ב</body>",
+      "expected_words": 2
+    },
+    "wrap-4-span-8-2": {
+      "html": "<body><span>{</span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-8-2": {
+      "html": "<body><strong><span>{</span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 2
+    },
+    "wrap-4-raw-9-0": {
+      "html": "<body>\" one two</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-9-0": {
+      "html": "<body><span>\" </span><span>one two</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-9-0": {
+      "html": "<body><strong><span>\" </span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-9-1": {
+      "html": "<body>\" שלום עולם</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-9-1": {
+      "html": "<body><span>\" </span><span>שלום עולם</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-9-1": {
+      "html": "<body><strong><span>\" </span></strong><strong><span>שלום עולם</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-4-raw-9-2": {
+      "html": "<body>\" בראשית ב</body>",
+      "expected_words": 3
+    },
+    "wrap-4-span-9-2": {
+      "html": "<body><span>\" </span><span>בראשית ב</span></body>",
+      "expected_words": 3
+    },
+    "wrap-4-wrapped-9-2": {
+      "html": "<body><strong><span>\" </span></strong><strong><span>בראשית ב</span></strong></body>",
+      "expected_words": 3
+    },
+    "wrap-5-one-1": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 3
+    },
+    "wrap-5-abcde-1": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 3
+    },
+    "wrap-5-שלום-1": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 3
+    },
+    "wrap-5-one-2": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 4
+    },
+    "wrap-5-abcde-2": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 4
+    },
+    "wrap-5-שלום-2": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 4
+    },
+    "wrap-5-one-3": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 5
+    },
+    "wrap-5-abcde-3": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 5
+    },
+    "wrap-5-שלום-3": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 5
+    },
+    "wrap-5-one-4": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 6
+    },
+    "wrap-5-abcde-4": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 6
+    },
+    "wrap-5-שלום-4": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 6
+    },
+    "wrap-5-one-5": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 7
+    },
+    "wrap-5-abcde-5": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 7
+    },
+    "wrap-5-שלום-5": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 7
+    },
+    "wrap-5-one-6": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 8
+    },
+    "wrap-5-abcde-6": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 8
+    },
+    "wrap-5-שלום-6": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 8
+    },
+    "wrap-5-one-7": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 9
+    },
+    "wrap-5-abcde-7": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 9
+    },
+    "wrap-5-שלום-7": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 9
+    },
+    "wrap-5-one-8": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 10
+    },
+    "wrap-5-abcde-8": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 10
+    },
+    "wrap-5-שלום-8": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 10
+    },
+    "wrap-5-one-9": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 11
+    },
+    "wrap-5-abcde-9": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 11
+    },
+    "wrap-5-שלום-9": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 11
+    },
+    "wrap-5-one-10": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 12
+    },
+    "wrap-5-abcde-10": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 12
+    },
+    "wrap-5-שלום-10": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 12
+    },
+    "wrap-5-one-11": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 13
+    },
+    "wrap-5-abcde-11": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 13
+    },
+    "wrap-5-שלום-11": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 13
+    },
+    "wrap-5-one-12": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 14
+    },
+    "wrap-5-abcde-12": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 14
+    },
+    "wrap-5-שלום-12": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 14
+    },
+    "wrap-5-one-13": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 15
+    },
+    "wrap-5-abcde-13": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 15
+    },
+    "wrap-5-שלום-13": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 15
+    },
+    "wrap-5-one-14": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 16
+    },
+    "wrap-5-abcde-14": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 16
+    },
+    "wrap-5-שלום-14": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 16
+    },
+    "wrap-5-one-15": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 17
+    },
+    "wrap-5-abcde-15": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 17
+    },
+    "wrap-5-שלום-15": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 18
+    },
+    "wrap-5-one-16": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 18
+    },
+    "wrap-5-abcde-16": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 18
+    },
+    "wrap-5-שלום-16": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 19
+    },
+    "wrap-5-one-17": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 19
+    },
+    "wrap-5-abcde-17": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 19
+    },
+    "wrap-5-שלום-17": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 19
+    },
+    "wrap-5-one-18": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 20
+    },
+    "wrap-5-abcde-18": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 20
+    },
+    "wrap-5-שלום-18": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 20
+    },
+    "wrap-5-one-19": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 22
+    },
+    "wrap-5-abcde-19": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 21
+    },
+    "wrap-5-שלום-19": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 21
+    },
+    "wrap-5-one-20": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 23
+    },
+    "wrap-5-abcde-20": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 22
+    },
+    "wrap-5-שלום-20": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 22
+    },
+    "wrap-5-one-21": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 23
+    },
+    "wrap-5-abcde-21": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 23
+    },
+    "wrap-5-שלום-21": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 23
+    },
+    "wrap-5-one-22": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 24
+    },
+    "wrap-5-abcde-22": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 24
+    },
+    "wrap-5-שלום-22": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 24
+    },
+    "wrap-5-one-23": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 25
+    },
+    "wrap-5-abcde-23": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 25
+    },
+    "wrap-5-שלום-23": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 25
+    },
+    "wrap-5-one-24": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 26
+    },
+    "wrap-5-abcde-24": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 26
+    },
+    "wrap-5-שלום-24": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 26
+    },
+    "wrap-5-one-25": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 27
+    },
+    "wrap-5-abcde-25": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 27
+    },
+    "wrap-5-שלום-25": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 27
+    },
+    "wrap-5-one-26": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 28
+    },
+    "wrap-5-abcde-26": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 29
+    },
+    "wrap-5-שלום-26": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 28
+    },
+    "wrap-5-one-27": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 29
+    },
+    "wrap-5-abcde-27": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 29
+    },
+    "wrap-5-שלום-27": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 29
+    },
+    "wrap-5-one-28": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 30
+    },
+    "wrap-5-abcde-28": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 30
+    },
+    "wrap-5-שלום-28": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 30
+    },
+    "wrap-5-one-29": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 31
+    },
+    "wrap-5-abcde-29": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 31
+    },
+    "wrap-5-שלום-29": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 31
+    },
+    "wrap-5-one-30": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 32
+    },
+    "wrap-5-abcde-30": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde abcde</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 32
+    },
+    "wrap-5-שלום-30": {
+      "html": "<body><p><span><strong><span>\"</span></strong><strong><span>שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום שלום</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></span></p></body>",
+      "expected_words": 33
+    },
+    "wrap-6-boundary-73-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-73-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-73-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-73-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-73-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-74-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-74-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-74-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-74-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-74-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-75-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-75-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-75-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-75-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-75-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-76-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-76-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-76-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-76-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-76-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-77-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-77-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-77-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-77-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-77-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-78-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-6-boundary-78-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-78-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-78-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-78-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-79-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-79-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-79-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-79-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-79-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-80-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-80-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-80-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-80-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-80-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-81-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-81-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-81-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-81-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-81-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-82-1": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>b cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-82-2": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-82-3": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-82-4": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-boundary-82-5": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</strong><strong>bbbbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-72-space": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-72-spaces": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-72-tab": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\t</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-72-newline": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-72-nbsp": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-74-space": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-74-spaces": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-74-tab": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\t</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-74-newline": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-74-nbsp": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-76-space": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-76-spaces": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-76-tab": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\t</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-76-newline": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-76-nbsp": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-78-space": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-78-spaces": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa   </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-78-tab": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\t</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-78-newline": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-6-whitespace-78-nbsp": {
+      "html": "<body><strong>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-7-emoji-35": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-7-emoji-36": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-7-emoji-37": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-7-emoji-38": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 2
+    },
+    "wrap-7-emoji-39": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-7-emoji-40": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-7-emoji-41": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-7-emoji-42": {
+      "html": "<body><strong>😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀</strong><strong>bbb cc</strong></body>",
+      "expected_words": 3
+    },
+    "wrap-7-whitespace-spaces-15": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one   one   one   one   one   one   one   one   one   one   one   one   one   one   one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 17
+    },
+    "wrap-7-whitespace-spaces-19": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 22
+    },
+    "wrap-7-whitespace-spaces-20": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-spaces-21": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one   one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-tab-15": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 17
+    },
+    "wrap-7-whitespace-tab-19": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 22
+    },
+    "wrap-7-whitespace-tab-20": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-tab-21": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone\tone</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-newline-15": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\none\none\none\none\none\none\none\none\none\none\none\none\none\none</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 17
+    },
+    "wrap-7-whitespace-newline-19": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 22
+    },
+    "wrap-7-whitespace-newline-20": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-newline-21": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none\none</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-nbsp-15": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 17
+    },
+    "wrap-7-whitespace-nbsp-19": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 22
+    },
+    "wrap-7-whitespace-nbsp-20": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-7-whitespace-nbsp-21": {
+      "html": "<body><strong><span>\"</span></strong><strong><span>one one one one one one one one one one one one one one one one one one one one one</span></strong><strong><span>\" (</span></strong><strong><span>one two</span></strong></body>",
+      "expected_words": 23
+    },
+    "wrap-8-trailing-20-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 21
+    },
+    "wrap-8-trailing-20-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 21
+    },
+    "wrap-8-trailing-21-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 22
+    },
+    "wrap-8-trailing-21-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 22
+    },
+    "wrap-8-trailing-22-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 23
+    },
+    "wrap-8-trailing-22-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 23
+    },
+    "wrap-8-trailing-23-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 24
+    },
+    "wrap-8-trailing-23-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 24
+    },
+    "wrap-8-trailing-24-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 25
+    },
+    "wrap-8-trailing-24-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 25
+    },
+    "wrap-8-trailing-25-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 26
+    },
+    "wrap-8-trailing-25-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 26
+    },
+    "wrap-8-trailing-26-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 27
+    },
+    "wrap-8-trailing-26-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 27
+    },
+    "wrap-8-trailing-30-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 31
+    },
+    "wrap-8-trailing-30-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 31
+    },
+    "wrap-8-trailing-40-space": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 41
+    },
+    "wrap-8-trailing-40-nbsp": {
+      "html": "<body><strong>one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one one </strong><strong>two</strong></body>",
+      "expected_words": 41
+    }
+  },
+  "additional_provenance": "292 generated synthetic formatting-boundary, UTF-16/emoji and trailing-whitespace cases measured against installed unmodified Screaming Frog 24.3 CLI List mode. No competitor source code or website article content included in these added fixtures."
+}

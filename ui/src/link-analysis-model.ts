@@ -1,0 +1,6 @@
+import {displayUrl} from './model';
+export type AnalysisRow={url:string;status:number|null;sources:string[];reachable:boolean;orphan_candidate:boolean;evidence:string;unique_inlinks:number;followed_inlinks:number;followed_outlinks:number;rank:number|null;score:number|null};
+export type LinkAnalysisReport={rows:AnalysisRow[];scored_pages:number;iterations:number;residual:number;converged:boolean;note:string};
+export function selectAnalysisRows(rows:AnalysisRow[],candidates:boolean,search:string){return rows.filter(row=>(!candidates||row.orphan_candidate)&&displayUrl(row.url).toLocaleLowerCase().includes(search.toLocaleLowerCase())).sort((a,b)=>(b.score??-1)-(a.score??-1)||a.url.localeCompare(b.url))}
+export const analysisHeaders=['Address','HTTP status','Sources','Reachable from seed','Orphan candidate','Evidence','Unique Inlinks','Followed Inlinks','Followed Outlinks','Independent Link Score','Rank','Address (Original)'];
+export function analysisCells(row:AnalysisRow){return [displayUrl(row.url),row.status==null?'Unknown':String(row.status),row.sources.join('; '),row.reachable?'Yes':'No',row.orphan_candidate?'Yes':'No',row.evidence,String(row.unique_inlinks),String(row.followed_inlinks),String(row.followed_outlinks),row.score==null?'':row.score.toFixed(4),row.rank==null?'':String(row.rank),row.url]}

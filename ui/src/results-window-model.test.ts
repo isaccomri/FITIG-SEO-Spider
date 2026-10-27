@@ -1,0 +1,5 @@
+import {expect,it} from 'vitest';import {resultWindow,RESULT_ROW_HEIGHT} from './results-window-model';
+it('handles empty and small result sets without spacer rows',()=>{expect(resultWindow(0,0,360)).toEqual({start:0,end:0,top:0,bottom:0});expect(resultWindow(4,0,360)).toEqual({start:0,end:4,top:0,bottom:0})});
+it('bounds rendered rows independently of a ten-thousand-row inventory and preserves total height',()=>{for(const scroll of [0,3033,150033,299673]){const view=resultWindow(10000,scroll,360);expect(view.end-view.start).toBeLessThanOrEqual(33);expect(view.top+(view.end-view.start)*RESULT_ROW_HEIGHT+view.bottom).toBe(300000)}});
+it('retains middle and final records with global row positions',()=>{expect(resultWindow(10000,3033,360).start).toBe(90);expect(resultWindow(10000,299999,360).end).toBe(10000);expect(resultWindow(1,299999,360)).toEqual({start:0,end:1,top:0,bottom:0})});
+it('recovers invalid geometry to a usable initial window',()=>{expect(resultWindow(-1,NaN,Infinity)).toEqual({start:0,end:0,top:0,bottom:0});expect(resultWindow(10000,NaN,NaN).start).toBe(0)});

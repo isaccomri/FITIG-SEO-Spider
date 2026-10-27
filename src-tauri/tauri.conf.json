@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "FITIG SEO Spider",
+  "version": "0.1.47",
+  "identifier": "com.fitig.seospider",
+  "build": {
+    "beforeDevCommand": "npm --prefix ui run dev",
+    "beforeBuildCommand": "npm --prefix ui run build",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../ui/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "FITIG SEO Spider",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 1000,
+        "minHeight": 650
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src ipc: http://ipc.localhost; img-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "useLocalToolsDir": true,
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "shortDescription": "Local SEO crawl workbench",
+    "category": "DeveloperTool",
+    "resources": {
+      "../assets/third-party/axe-core/": "third-party/axe-core/",
+      "../assets/third-party/amp-validator/": "third-party/amp-validator/"
+    }
+  }
+}

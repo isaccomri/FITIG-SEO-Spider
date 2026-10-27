@@ -1,0 +1,28 @@
+{
+  "name": "fitig-seo-spider-ui",
+  "version": "0.1.47",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
+    "build": "tsc -b && vite build",
+    "test": "vitest run src/results-window-model.test.ts src/preferences-model.test.ts src/compare-model.test.ts src/text-analysis-model.test.ts src/link-analysis-model.test.ts src/sitemap-model.test.ts src/model.test.ts src/link-model.test.tsx src/workspace-model.test.ts src/graph-model.test.tsx src/raster-export.test.ts",
+    "test:core": "node --experimental-strip-types --test src/model.node.test.mjs",
+    "test:visual": "node tests/visualisation.browser.cjs",
+    "test:desktop": "node tests/desktop-acceptance.cjs",
+    "test:desktop-workflows": "node tests/desktop-workflows.cjs"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.8.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.0",
+    "vitest": "5.0.5"
+  }
+}
