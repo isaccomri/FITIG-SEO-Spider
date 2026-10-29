@@ -1,5 +1,5 @@
 import {describe,it,expect} from 'vitest';
-import {auditSitemap,normalizeLocation,reconcileSitemapFiles,selectSitemapFindings,SITEMAP_PAGE_SIZE} from './sitemap-model';
+import {sitemapCrawlList,auditSitemap,normalizeLocation,reconcileSitemapFiles,selectSitemapFindings,SITEMAP_PAGE_SIZE} from './sitemap-model';
 describe('sitemap reconciliation',()=>{
  it('unavailable HTML extraction is not a positive sitemap candidate',()=>{const p={url:'https://e.test/large',status:200,content_type:'text/html',html_extracted:false};expect(auditSitemap([],[p])).toHaveLength(0);expect(auditSitemap([p.url],[p])[0].issues).toContain('HTML extraction unavailable')});
  it('filters supplied membership and unknown observations independently',()=>{const rows=auditSitemap(['https://e.test/unknown'],[{url:'https://e.test/',status:200,content_type:'text/html'}]);expect(selectSitemapFindings(rows,'Not crawled','')).toHaveLength(1);expect(selectSitemapFindings(rows,'Missing from sitemap','')[0].url).toBe('https://e.test/');expect(selectSitemapFindings(rows,'In sitemap','')).toHaveLength(1)});
@@ -13,4 +13,9 @@ describe('sitemap reconciliation',()=>{
  it('rejects relative, non HTTP, credentials and fragments',()=>{for(const url of ['/a','file:///a','https://u:p@e.test/','https://e.test/#a'])expect(()=>normalizeLocation(url)).toThrow()});
  it('recurses local indexes once and reports missing children',()=>{const result=reconcileSitemapFiles([{name:'index.xml',document:{kind:'sitemapindex',locations:['https://e.test/child.xml','https://e.test/missing.xml']}},{name:'child.xml',document:{kind:'urlset',locations:['https://e.test/עברית']}}]);expect(result.locations).toEqual(['https://e.test/עברית']);expect(result.missing).toEqual(['https://e.test/missing.xml'])});
  it('rejects index cycles and ambiguous selected filenames',()=>{expect(()=>reconcileSitemapFiles([{name:'a.xml',document:{kind:'sitemapindex',locations:['https://e.test/b.xml']}},{name:'b.xml',document:{kind:'sitemapindex',locations:['https://e.test/a.xml']}}])).toThrow('cycle');expect(()=>reconcileSitemapFiles([{name:'x',document:{kind:'urlset',locations:[]}},{name:'x',document:{kind:'urlset',locations:[]}}])).toThrow('duplicate')});
+});
+
+describe('sitemap crawl preparation',()=>{
+ it('deduplicates canonical Hebrew identity in first-occurrence order',()=>{const input=['https://e.test/עברית','https://e.test/%D7%A2%D7%91%D7%A8%D7%99%D7%AA','https://other.test/'];expect(sitemapCrawlList(input)).toEqual(['https://e.test/%D7%A2%D7%91%D7%A8%D7%99%D7%AA','https://other.test/']);expect(input).toHaveLength(3)});
+ it('rejects empty, oversized and invalid inventories before staging',()=>{expect(()=>sitemapCrawlList([])).toThrow();expect(()=>sitemapCrawlList(Array(250001).fill('https://e.test/'))).toThrow();for(const url of ['file:///a','https://u:p@e.test/','https://e.test/#x','/relative'])expect(()=>sitemapCrawlList(['https://e.test/',url])).toThrow()});
 });

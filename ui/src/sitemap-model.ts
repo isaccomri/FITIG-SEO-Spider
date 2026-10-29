@@ -3,6 +3,11 @@ import {status,type PageRecord} from './model';
 import {displayUrl} from './model';
 export type SitemapFinding={url:string;status:number|string;membership:string;issues:string};
 export const SITEMAP_PAGE_SIZE=200;
+export function sitemapCrawlList(locations:string[]){
+ if(!locations.length)throw Error('The sitemap inventory has no URLs.');
+ if(locations.length>250000)throw Error('Sitemap inventory exceeds 250,000 entries.');
+ return [...new Set(locations.map(normalizeLocation))];
+}
 export function selectSitemapFindings(rows:SitemapFinding[],filter:string,search:string,issuesOnly=false){const query=search.trim().toLocaleLowerCase();return rows.filter(row=>{
  if(issuesOnly&&!row.issues)return false;
  if(filter==='In sitemap'&&row.membership!=='In sitemap')return false;

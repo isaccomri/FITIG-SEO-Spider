@@ -47,3 +47,9 @@ it('keeps exact response duplicates separate from normalized content and missing
  expect(selectPages(pages,'Content','Duplicate','')).toHaveLength(3);
  expect(columnsFor('Content')).toContain('response_hash');
 });
+
+describe('Meta Keywords inventory',()=>{
+ const pages=[{url:'https://e.test/a',content_type:'text/html',meta_keywords:['שלום','second']},{url:'https://e.test/b',content_type:'text/html',meta_keywords:['שלום']},{url:'https://e.test/c',content_type:'text/html',meta_keywords:[]},{url:'https://e.test/legacy',content_type:'text/html'},{url:'https://e.test/image',content_type:'image/png',meta_keywords:[]},{url:'https://e.test/failed',content_type:'text/html',html_extracted:false}];
+ it('separates observed missing, multiple, duplicates and legacy unknowns',()=>{for(const [filter,expected] of [['Missing',['c']],['Multiple',['a']],['Duplicate',['a','b']],['Not recorded',['legacy']]] as const)expect(selectPages(pages,'Meta Keywords',filter,'').map(p=>p.url.split('/').pop())).toEqual(expected);expect(selectPages(pages,'Meta Keywords','All','')).toHaveLength(4)});
+ it('renders typed empty versus unknown counts and searches Hebrew',()=>{expect(getCell(pages[2],'meta_keywords_count')).toBe('0');expect(getCell(pages[3],'meta_keywords_count')).toBe('');expect(getCell(pages[0],'meta_keywords_length')).toBe('4');expect(selectPages(pages,'Meta Keywords','All','שלום')).toHaveLength(2);expect(columnsFor('Meta Keywords')).toContain('meta_keywords_first');expect(filtersFor('Meta Keywords')).toContain('Not recorded')});
+});
