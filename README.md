@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.52**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.53**.
 
 ## Status
 
 195 of 207 tracked entries (94.2%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.52 release ran 223 engine, 102 UI and 7 Node tests plus 12 installed-native assertions. See [release notes](docs/release-0.1.52.md). Tauri unit tests were not rerun. Recent releases add inherited link targets, reviewed sitemap-to-List preparation and Meta Keywords. Complete Hebrew translation, form authentication, provider verification, trusted signing and exhaustive competitor behavior remain incomplete. Installed workspace observation confirms additional gaps; the percentage is not a full parity score.
+The local 0.1.53 release ran 103 UI tests, seven Node model tests and six installed-native assertions for persistent all-table column reset. Engine/Tauri tests were not rerun for this UI change. See [release notes](docs/release-0.1.53.md) and [remaining acceptance](docs/remaining-207-acceptance.md). Full parity remains incomplete; trusted signing requires an external certificate/service that is not currently available.
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[0.1.52 evidence and practical limits](docs/release-0.1.52.md): Meta Keywords, reviewed sitemap crawl preparation and inherited link targets. Local installed acceptance passed; account integrations, full competitor inventory and trusted signing remain incomplete. CI is independently reported by GitHub Actions.
+[0.1.53 evidence and practical limits](docs/release-0.1.53.md). Independent local acceptance passed; consult GitHub Actions separately for CI status.

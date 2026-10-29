@@ -16,3 +16,4 @@ export function defaultColumnWidth(key:string){return key==='url'?420:key==='tit
 export function columnWidth(preferences:WorkbenchPreferences,category:string,key:string){return preferences.widths[category]?.[key]??defaultColumnWidth(key)}
 export function reorderColumns(columns:string[],from:string,to:string){if(!columns.includes(from)||!columns.includes(to)||from===to)return columns;const next=columns.filter(key=>key!==from);next.splice(next.indexOf(to),0,from);return next}
 export function serializePreferences(preferences:WorkbenchPreferences){return JSON.stringify(parsePreferences(JSON.stringify(preferences)))}
+export function resetTableColumns(preferences:WorkbenchPreferences):WorkbenchPreferences{return {...preferences,columns:{},widths:{}}}

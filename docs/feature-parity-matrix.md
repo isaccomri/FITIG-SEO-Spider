@@ -1,10 +1,10 @@
 # Feature Parity Matrix
 
-Installed version: 0.1.52. Full parity has NOT been achieved.
+Installed version: 0.1.53. Full parity has NOT been achieved.
 
 Partial tested coverage: 195/207 = 94.2%; scoped implementation/test evidence, not full equivalence.
 
-For 0.1.52: 223 engine, 102 UI and 7 Node tests; 12 installed-native assertions. Tauri tests were not rerun. Historical totals are not combined into a new certification. See release-0.1.52.md.
+For 0.1.53: 103 UI and 7 Node tests; 6 installed-native assertions. Engine/Tauri tests were not rerun. Historical totals are not combined into a new certification. See release-0.1.53.md.
 
 | Status | Features |
 |---|---:|
