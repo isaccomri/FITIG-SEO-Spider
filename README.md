@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.53**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.54**.
 
 ## Status
 
-195 of 207 tracked entries (94.2%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
+196 of 207 tracked entries (94.7%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.53 release ran 103 UI tests, seven Node model tests and six installed-native assertions for persistent all-table column reset. Engine/Tauri tests were not rerun for this UI change. See [release notes](docs/release-0.1.53.md) and [remaining acceptance](docs/remaining-207-acceptance.md). Full parity remains incomplete; trusted signing requires an external certificate/service that is not currently available.
+The local 0.1.54 release ran 229 engine, 103 UI and seven Node model tests plus 35 installed-native assertions. Adds explicit standard HTTP form login with named CSRF input, same-origin success verification and encrypted exact-origin cookies. Interactive browser/JavaScript/SSO/MFA login remains unavailable. See [release notes](docs/release-0.1.54.md) and [remaining acceptance](docs/remaining-207-acceptance.md). Trusted signing, full translation, provider verification and exhaustive competitor parity remain incomplete.
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[0.1.53 evidence and practical limits](docs/release-0.1.53.md). Independent local acceptance passed; consult GitHub Actions separately for CI status.
+[0.1.54 evidence and practical limits](docs/release-0.1.54.md). Independent local acceptance passed; consult GitHub Actions separately for CI status.

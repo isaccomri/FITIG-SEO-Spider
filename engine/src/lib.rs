@@ -1,3 +1,4 @@
+pub mod form_auth;
 pub mod google_sheets;
 pub mod semantic;
 use rusqlite::{params, Connection, OptionalExtension};
@@ -125,8 +126,8 @@ impl Default for Page{fn default()->Self{Self{meta_keywords:None,response_hash:N
 pub struct CrawlOptions { pub url: String, pub db: String, pub limit: usize, pub delay_ms: u64, pub resume: bool }
 #[derive(Debug,Clone,Serialize,Deserialize,PartialEq,Eq)]
 #[serde(default)]
-pub struct CrawlProfile {pub request_timeout_secs:u64,pub concurrency:usize,pub custom_rules:Vec<CustomRule>,pub store_html:bool,pub check_external:bool,pub subdomain_root:String,pub http_auth_origin:String,pub cookies_enabled:bool,pub proxy_mode:String,pub proxy_url:String,pub proxy_bypass:String,pub proxy_auth_required:bool,pub url_rewriting:rewriting::Options,pub max_depth:usize,pub include_patterns:Vec<String>,pub exclude_patterns:Vec<String>,pub user_agent:String,pub rendering:render::Rendering}
-impl Default for CrawlProfile{fn default()->Self{Self{request_timeout_secs:20,concurrency:5,custom_rules:Vec::new(),store_html:true,check_external:false,subdomain_root:String::new(),http_auth_origin:String::new(),cookies_enabled:false,proxy_mode:"automatic".into(),proxy_url:String::new(),proxy_bypass:String::new(),proxy_auth_required:false,url_rewriting:Default::default(),max_depth:0,include_patterns:Vec::new(),exclude_patterns:Vec::new(),user_agent:"FITIGBot/0.1.53".into(),rendering:Default::default()}}}
+pub struct CrawlProfile {pub form_auth:Option<form_auth::Config>,pub request_timeout_secs:u64,pub concurrency:usize,pub custom_rules:Vec<CustomRule>,pub store_html:bool,pub check_external:bool,pub subdomain_root:String,pub http_auth_origin:String,pub cookies_enabled:bool,pub proxy_mode:String,pub proxy_url:String,pub proxy_bypass:String,pub proxy_auth_required:bool,pub url_rewriting:rewriting::Options,pub max_depth:usize,pub include_patterns:Vec<String>,pub exclude_patterns:Vec<String>,pub user_agent:String,pub rendering:render::Rendering}
+impl Default for CrawlProfile{fn default()->Self{Self{form_auth:None,request_timeout_secs:20,concurrency:5,custom_rules:Vec::new(),store_html:true,check_external:false,subdomain_root:String::new(),http_auth_origin:String::new(),cookies_enabled:false,proxy_mode:"automatic".into(),proxy_url:String::new(),proxy_bypass:String::new(),proxy_auth_required:false,url_rewriting:Default::default(),max_depth:0,include_patterns:Vec::new(),exclude_patterns:Vec::new(),user_agent:"FITIGBot/0.1.54".into(),rendering:Default::default()}}}
 pub fn validate_request_timeout(seconds:u64)->Result<()>{if !(1..=300).contains(&seconds){return Err("HTTP request timeout must be between 1 and 300 seconds".into())}Ok(())}
 pub fn project_profile(db:&str)->Result<CrawlProfile>{let value:Option<String>=open_read(db)?.query_row("SELECT value FROM metadata WHERE key='profile'",[],|r|r.get(0)).optional()?;Ok(match value{Some(v)=>serde_json::from_str(&v)?,None=>CrawlProfile::default()})}
 pub fn project_sitemaps(db:&str)->Result<Option<serde_json::Value>>{let value:Option<String>=open_read(db)?.query_row("SELECT value FROM metadata WHERE key='sitemaps'",[],|r|r.get(0)).optional()?;value.map(|v|serde_json::from_str(&v).map_err(Into::into)).transpose()}
@@ -212,20 +213,21 @@ pub fn robots_allowed_for(source:&str,path:&str,user_agent:&str)->bool {
  rules.sort();rules.last().map(|r|r.1).unwrap_or(true)
 }
 
-pub fn crawl(options:CrawlOptions,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_impl(options,None,CrawlProfile::default(),None,None,render::render,emit)}
+pub fn crawl(options:CrawlOptions,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_impl(options,None,CrawlProfile::default(),None,None,None,render::render,emit)}
 pub fn crawl_list(options:CrawlOptions,urls:Vec<String>,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_configured(options,Some(urls),CrawlProfile::default(),emit)}
 pub fn crawl_configured(options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_configured_with_renderer(options,urls,profile,render::render,emit)}
 pub fn crawl_configured_with_renderer<D:Into<render::RenderedDocument>>(options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,renderer:impl Fn(&str,&render::Rendering)->Result<D>,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_with_authentication_and_renderer(options,urls,profile,None,renderer,emit)}
 pub fn crawl_with_authentication_and_renderer<D:Into<render::RenderedDocument>>(options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_with_transport_and_renderer(options,urls,profile,authentication,None,renderer,emit)}
-pub fn crawl_with_transport_and_renderer<D:Into<render::RenderedDocument>>(mut options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,proxy_authentication:Option<authentication::Session>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,emit:impl FnMut(Progress))->Result<Vec<Page>>{
- if urls.is_none(){return crawl_impl(options,None,profile,authentication,proxy_authentication,renderer,emit)}
+pub fn crawl_with_transport_and_renderer<D:Into<render::RenderedDocument>>(options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,proxy_authentication:Option<authentication::Session>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,emit:impl FnMut(Progress))->Result<Vec<Page>>{crawl_with_sessions_and_renderer(options,urls,profile,authentication,proxy_authentication,None,renderer,emit)}
+pub fn crawl_with_sessions_and_renderer<D:Into<render::RenderedDocument>>(mut options:CrawlOptions,urls:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,proxy_authentication:Option<authentication::Session>,form_credentials:Option<form_auth::Credentials>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,emit:impl FnMut(Progress))->Result<Vec<Page>>{
+ if urls.is_none(){return crawl_impl(options,None,profile,authentication,proxy_authentication,form_credentials,renderer,emit)}
  let urls=urls.unwrap();
  let mut normalized=Vec::new();let mut seen=std::collections::HashSet::new();
  for raw in urls {let mut url=Url::parse(raw.trim())?;if !["http","https"].contains(&url.scheme())||url.host_str().is_none(){return Err("List mode requires absolute HTTP(S) URLs".into())}url.set_fragment(None);let url=url.to_string();if seen.insert(url.clone()){normalized.push(url)}}
- options.url=normalized.first().ok_or("The URL list is empty")?.clone();crawl_impl(options,Some(normalized),profile,authentication,proxy_authentication,renderer,emit)
+ options.url=normalized.first().ok_or("The URL list is empty")?.clone();crawl_impl(options,Some(normalized),profile,authentication,proxy_authentication,form_credentials,renderer,emit)
 }
 
-fn crawl_impl<D:Into<render::RenderedDocument>>(options:CrawlOptions,list:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,proxy_authentication:Option<authentication::Session>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,mut emit:impl FnMut(Progress))->Result<Vec<Page>>{
+fn crawl_impl<D:Into<render::RenderedDocument>>(options:CrawlOptions,list:Option<Vec<String>>,profile:CrawlProfile,authentication:Option<authentication::Session>,proxy_authentication:Option<authentication::Session>,form_credentials:Option<form_auth::Credentials>,renderer:impl Fn(&str,&render::Rendering)->Result<D>,mut emit:impl FnMut(Progress))->Result<Vec<Page>>{
  proxy_settings::validate(&profile,proxy_authentication.as_ref())?;
  authentication::validate_configuration(&profile.http_auth_origin,authentication.as_ref(),profile.rendering.enabled)?;
  http_cookies::validate(profile.cookies_enabled,profile.rendering.enabled)?;
@@ -236,6 +238,7 @@ fn crawl_impl<D:Into<render::RenderedDocument>>(options:CrawlOptions,list:Option
  if profile.include_patterns.len()>100||profile.exclude_patterns.len()>100||profile.include_patterns.iter().chain(&profile.exclude_patterns).any(|s|s.len()>8192){return Err("Crawl scope supports at most 100 include/exclude expressions, 8192 bytes each".into())}
  let includes=regex::RegexSet::new(&profile.include_patterns)?;let excludes=regex::RegexSet::new(&profile.exclude_patterns)?;
  let seed=Url::parse(&options.url)?;if !["http","https"].contains(&seed.scheme()) || seed.host_str().is_none(){return Err("Seed must be an absolute HTTP(S) URL".into())}
+ form_auth::validate(&profile,form_credentials.as_ref(),seed.as_str())?;
  let scope=scope::Scope::new(&seed,&profile.subdomain_root)?;
  let mode=if list.is_some(){"list"}else{"spider"};
  // Validate saved state through a read-only connection before any migration or write.
@@ -247,7 +250,7 @@ fn crawl_impl<D:Into<render::RenderedDocument>>(options:CrawlOptions,list:Option
   if let Some(urls)=&list{if project_urls(&options.db)?!=*urls{return Err("Resume URL list differs from saved crawl".into())}}
   if project_profile(&options.db)?!=profile{return Err("Resume profile differs from saved crawl; restore its custom/rendering settings first".into())}
  }else if std::path::Path::new(&options.db).exists(){return Err("A project already exists at this path; resume it or choose a new project path".into())}
- let cookie_jar=if profile.cookies_enabled{Some(if options.resume{http_cookies::Jar::restore(&options.db)?.unwrap_or(std::sync::Arc::new(http_cookies::Jar::new()?))}else{std::sync::Arc::new(http_cookies::Jar::new()?)})}else{None};
+ let cookie_jar=if let Some(credentials)=form_credentials.as_ref(){Some(form_auth::authenticate(&profile,credentials)?)}else if profile.cookies_enabled{Some(if options.resume{http_cookies::Jar::restore(&options.db)?.unwrap_or(std::sync::Arc::new(http_cookies::Jar::new()?))}else{std::sync::Arc::new(http_cookies::Jar::new()?)})}else{None};
  let mut c=open(&options.db)?;
  if !options.resume{
   let transaction=c.transaction()?;
