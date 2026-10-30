@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.54**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.55**.
 
 ## Status
 
 196 of 207 tracked entries (94.7%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.54 release ran 229 engine, 103 UI and seven Node model tests plus 35 installed-native assertions. Adds explicit standard HTTP form login with named CSRF input, same-origin success verification and encrypted exact-origin cookies. Interactive browser/JavaScript/SSO/MFA login remains unavailable. See [release notes](docs/release-0.1.54.md) and [remaining acceptance](docs/remaining-207-acceptance.md). Trusted signing, full translation, provider verification and exhaustive competitor parity remain incomplete.
+The local 0.1.55 release adds opt-in image sitemap ZIP export with readable Hebrew URLs, CDN image locations, fragment deduplication and fail-closed bounds. 232 engine, 103 UI and seven Node tests passed; three native image checks and 16 existing sitemap regression checks passed. Noindex-image/relevance/CDN-regex controls and hreflang extensions remain incomplete. See [release notes](docs/release-0.1.55.md) and [remaining acceptance](docs/remaining-207-acceptance.md). This is partial-tested coverage, not full competitor equivalence.
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[0.1.54 evidence and practical limits](docs/release-0.1.54.md). Independent local acceptance passed; consult GitHub Actions separately for CI status.
+[0.1.55 evidence and practical limits](docs/release-0.1.55.md). Consult GitHub Actions separately for CI status.
