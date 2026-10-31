@@ -19,3 +19,5 @@ Current partial-tested coverage: 196/207. Qualifying all rows is distinct from f
 Latest concrete work is recorded in each release note. The installed program and existing crawl data must remain protected by backups and byte-comparison checks during upgrades.
 
 Row 145 is partially tested in 0.1.54 for explicit standard HTTP forms. Interactive browser forms, JavaScript/SSO/MFA and ongoing expiry detection remain unimplemented; qualification is not full equivalence.
+
+0.1.58 adds six dedicated redirect/canonical report variants with native table/filter/CSV verification. Row 155 remains pending because the remaining report taxonomy and exact competitor outputs are not yet implemented/certified.
