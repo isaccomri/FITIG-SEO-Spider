@@ -1,0 +1,13 @@
+# 0.1.56 — image sitemap selection
+
+Extends the observed-image sitemap exporter with three explicit controls:
+
+- Include images carrying observed noindex instructions (off by default). Uses recorded generic or exact Googlebot-Image restrictions; unobserved image responses remain unknown, not certified indexable. Legacy records use the existing conservative directive fallback.
+- An optional maximum number of distinct saved internal HTML source URLs per image. Duplicate image occurrences and fragments within the same source count once; a shared image can be excluded. Counting uses the saved crawl scope, including source pages excluded from sitemap page eligibility, and is not a complete-web link count.
+- An optional bounded Rust regular expression for external image URLs. Same-origin images bypass this pattern; external URLs match either their serialized or readable Unicode form. Blank means unrestricted external images. No new image requests are made.
+
+The summary/ZIP manifest reports included image associations, exclusions by noindex/source threshold/external pattern and unknown-indexability candidates. Counts describe page-image associations after per-page deduplication; unknown candidates can also be excluded by another rule. The 1,000-image limit applies after selection. Invalid patterns or out-of-range thresholds fail before replacing existing output. CLI flags are `--include-noindex-images`, `--max-image-inlinks N` and `--image-cdn-pattern REGEX`, alongside `--images`.
+
+This is an independent implementation. Exact competitor relevance semantics, every crawler discovery channel, hreflang/segment sitemap extensions and publishing are not certified. Coverage remains 196/207 partially tested rows (94.7%), not full equivalence.
+
+Validation: all 234 engine tests, 103 UI tests and seven Node tests passed. TypeScript/Vite and official NSIS builds passed. Five actual native selection assertions passed on the final release executable and again after installation; three previous image-sitemap and 16 prior sitemap-package native assertions also passed on installed 0.1.56. Independent XML parsing verifies selection and inclusion override. Invalid regex preserves the previous archive; exports preserve database bytes and make no additional requests. ESET detected zero threats. Installed payload hashes match the extracted installer, and 15 original app-data files remain byte-identical. Evidence: acceptance/image-selection-installed-056; acceptance/image-sitemap-installed-056; acceptance/sitemap-regression-installed-056; acceptance/installed-upgrade-0.1.56.json. Installer SHA256: 72513E48D698D2A8F87F6824AA037C7AAE0044AC88FB08029112577F4FD7A40D. Tauri unit tests were not rerun; native IPC/UI were exercised.
