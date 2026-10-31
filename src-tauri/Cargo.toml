@@ -1,6 +1,6 @@
 [package]
 name = "fitig-seo-spider"
-version = "0.1.56"
+version = "0.1.57"
 edition = "2021"
 
 [features]
