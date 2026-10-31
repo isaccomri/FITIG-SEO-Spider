@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.58**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.59**.
 
 ## Status
 
 196 of 207 tracked entries (94.7%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.58 release adds six dedicated redirect/canonical report variants with searchable paged tables and filtered CSV export. 239 engine, 103 UI and seven Node tests passed, with actual native report verification. The remaining report taxonomy and exact competitor output certification remain incomplete. See [release notes](docs/release-0.1.58.md) and [remaining acceptance](docs/remaining-207-acceptance.md). This is partial-tested coverage, not full competitor equivalence.
+The local 0.1.59 release adds seven hreflang and two pagination report variants, for fifteen dedicated report variants with searchable paged tables and filtered CSV. 241 engine, 103 UI and seven Node tests passed, with installed native report verification. The remaining report families and exact competitor output certification remain incomplete. See [release notes](docs/release-0.1.59.md) and [remaining acceptance](docs/remaining-207-acceptance.md). This is partial-tested coverage, not full competitor equivalence.
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[0.1.58 evidence and practical limits](docs/release-0.1.58.md). Consult GitHub Actions separately for CI status.
+[0.1.59 evidence and practical limits](docs/release-0.1.59.md). Consult GitHub Actions separately for CI status.
