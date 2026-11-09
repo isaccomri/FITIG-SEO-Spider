@@ -31,3 +31,5 @@ Row 145 is partially tested in 0.1.54 for explicit standard HTTP forms. Interact
 0.1.63 adds JavaScript console, mobile and accessibility summaries. Full report coverage and exact comparison remain pending under row 155.
 
 0.1.64 adds three saved provider metrics reports. PageSpeed opportunities and coverage need audit data beyond the measurements retained by the current import. Row 155 remains pending.
+
+0.1.65 addresses two report membership differences observed in a controlled Screaming Frog 25.1 fixture. Full output schema and broader report comparison remain pending.

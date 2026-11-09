@@ -14,12 +14,46 @@ fn follow<'a>(start:&'a Page,by:&BTreeMap<&str,&'a Page>,canonical:bool,mixed:bo
  }
  PathResult{path,edges,outcome:"1000-hop safety limit",status:Some(current.status)}
 }
+
+fn non_indexable_target(source: &Page, pages: &BTreeMap<&str, &Page>) -> Option<PathResult> {
+    let target = pages.get(source.canonical.as_str())?;
+    let outcome = match target.status {
+        0 => "No response",
+        300..=399 => "Canonical target redirects",
+        400..=599 => "HTTP error",
+        _ if crate::directives::restriction(target, "googlebot", "noindex") => "Noindex",
+        _ if !target.canonical.is_empty() && target.canonical != target.url => "Canonicalised target",
+        _ => return None,
+    };
+    Some(PathResult {
+        path: vec![source.url.clone(), target.url.clone()],
+        edges: vec!["canonical"],
+        outcome,
+        status: Some(target.status),
+    })
+}
 pub fn build(pages:&[Page],kind:&str)->Result<Report>{
  if !KINDS.contains(&kind){return Err("Unknown redirect/canonical report".into())}
  let by:BTreeMap<_,_>=pages.iter().map(|page|(page.url.as_str(),page)).collect();let canonical=matches!(kind,"canonical-chains"|"non-indexable-canonicals");let mixed=kind=="redirect-canonical-chains";
- let mut report=Report{kind:kind.into(),headers:["Source","Source Status","Final URL","Final Status","Hops","Outcome","Path (JSON)","Relationships (JSON)"].into_iter().map(String::from).collect(),rows:Vec::new(),truncated:false,scope:"Saved observations only. Uncrawled targets have blank final status; they are not HTTP errors. Chains use recorded targets; 1000-hop and 50000-row safety limits are explicit. Non-indexable means observed error, no response, noindex, redirect or loop; it is not an indexing decision. No network requests.".into()};
- for page in pages{if canonical{if page.canonical.is_empty()||page.canonical==page.url{continue}}else if page.redirect.is_empty(){continue}
-  let result=follow(page,&by,canonical,mixed);let include=match kind{"redirect-chains"|"canonical-chains"=>result.edges.len()>1||matches!(result.outcome,"Loop"|"1000-hop safety limit"),"redirects-to-error"=>result.status.is_some_and(|status|status>=400),"non-indexable-canonicals"=>matches!(result.outcome,"HTTP error"|"No response"|"Noindex"|"Canonical target redirects"|"Loop"),_=>true};if !include{continue}
+ let mut report=Report{kind:kind.into(),headers:["Source","Source Status","Final URL","Final Status","Hops","Outcome","Path (JSON)","Relationships (JSON)"].into_iter().map(String::from).collect(),rows:Vec::new(),truncated:false,scope:"Saved observations only. Uncrawled targets have blank final status; they are not HTTP errors. Chains use recorded targets; 1000-hop and 50000-row safety limits are explicit. The non-indexable canonicals report evaluates direct targets for observed response errors, no response, noindex, redirects or canonicalisation. No network requests.".into()};
+ for page in pages {
+  let has_canonical = !page.canonical.is_empty() && page.canonical != page.url;
+  if (canonical && !has_canonical) || (!canonical && page.redirect.is_empty() && !(mixed && has_canonical)) {
+      continue;
+  }
+  let result = if kind == "non-indexable-canonicals" {
+      let Some(result) = non_indexable_target(page, &by) else { continue };
+      result
+  } else {
+      follow(page, &by, canonical, mixed)
+  };
+  let include = match kind {
+      "redirect-chains" | "canonical-chains" | "redirect-canonical-chains" =>
+          result.edges.len() > 1 || matches!(result.outcome, "Loop" | "1000-hop safety limit"),
+      "redirects-to-error" => result.status.is_some_and(|status| status >= 400),
+      _ => true,
+  };
+  if !include { continue; }
   if report.rows.len()==50000{report.truncated=true;break}
   report.rows.push(vec![page.url.clone(),page.status.to_string(),result.path.last().cloned().unwrap_or_default(),result.status.map(|status|status.to_string()).unwrap_or_default(),result.edges.len().to_string(),result.outcome.into(),serde_json::to_string(&result.path)?,serde_json::to_string(&result.edges)?]);
  }Ok(report)
