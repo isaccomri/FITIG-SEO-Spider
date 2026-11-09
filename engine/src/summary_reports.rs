@@ -1,9 +1,26 @@
 use crate::{path_reports::Report, Page, Result};
 use std::collections::{BTreeMap, BTreeSet};
 
-pub const KINDS: [&str; 4] = ["crawl-overview", "issues-overview", "header-summary", "serp-summary"];
+pub const KINDS: [&str; 6] = ["crawl-overview", "issues-overview", "header-summary", "serp-summary", "insecure-content", "orphan-pages"];
 
 pub fn load(db: &str, kind: &str) -> Result<Report> {
+    if kind == "orphan-pages" {
+        let analysis = crate::link_analysis::project(db)?;
+        let mut rows: Vec<_> = analysis.rows.into_iter().filter(|row| row.orphan_candidate)
+            .take(50_001)
+            .map(|row| vec![
+                row.url, row.status.map(|status| status.to_string()).unwrap_or_default(),
+                row.sources.join(", "), row.unique_inlinks.to_string(), row.evidence,
+            ]).collect();
+        let truncated = rows.len() > 50_000;
+        rows.truncate(50_000);
+        return Ok(Report {
+            kind: kind.into(),
+            headers: ["URL", "Status", "Discovery sources", "Unique inlinks", "Evidence"]
+                .into_iter().map(String::from).collect(),
+            rows, truncated, scope: analysis.note,
+        });
+    }
     build(&crate::load_project_data(db)?.pages, kind)
 }
 
@@ -56,9 +73,50 @@ fn build(pages: &[Page], kind: &str) -> Result<Report> {
             (vec!["URL", "Title", "Meta description", "Title characters", "Description characters"], rows,
              "Saved metadata for internal HTTP 200 HTML pages. Lengths count Unicode characters. Search engines can display different text.")
         }
+        "insecure-content" => {
+            let mut rows = Vec::new();
+            'pages: for page in pages.iter().filter(|page| {
+                url::Url::parse(&page.url).is_ok_and(|url| url.scheme() == "https")
+            }) {
+                let references = page.links.iter().map(|link| (link.url.as_str(), link.kind.as_str()))
+                    .chain(page.images.iter().map(|(url, _)| (url.as_str(), "image")));
+                let mut seen = BTreeSet::new();
+                for (target, relation) in references {
+                    if url::Url::parse(target).is_ok_and(|url| url.scheme() == "http")
+                        && seen.insert((target, relation))
+                    {
+                        rows.push(vec![page.url.clone(), relation.into(), target.into()]);
+                        if rows.len() == 50_001 {
+                            break 'pages;
+                        }
+                    }
+                }
+            }
+            (vec!["HTTPS source", "Reference type", "HTTP target"], rows,
+             "Saved HTTP references from HTTPS pages. Reference type distinguishes navigation links from resources. Browser loading behavior is outside this report.")
+        }
         _ => return Err("Unknown summary report".into()),
     };
     let truncated = rows.len() > 50_000;
     rows.truncate(50_000);
     Ok(Report { kind: kind.into(), headers: headers.into_iter().map(String::from).collect(), rows, truncated, scope: scope.into() })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn insecure_report_keeps_unique_http_references_from_https_pages() {
+        let mut page = crate::extract(
+            "https://example.test/",
+            r#"<a href="http://example.test/next">Next</a><img src="http://example.test/a.png"><img src="http://example.test/a.png"><img src="https://example.test/secure.png">"#,
+            0,
+        ).unwrap();
+        let report = build(&[page.clone()], "insecure-content").unwrap();
+        assert_eq!(report.rows.len(), 2);
+        assert!(report.rows.iter().any(|row| row[2] == "http://example.test/a.png"));
+        page.url = "http://example.test/".into();
+        assert!(build(&[page], "insecure-content").unwrap().rows.is_empty());
+    }
 }

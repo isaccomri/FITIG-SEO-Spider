@@ -9,6 +9,8 @@ const server=http.createServer((req,res)=>{requests++;res.setHeader('Connection'
    ['crawl-overview', rows => rows.some(row => row.join('|') === 'Scope|All URLs|6') && rows.some(row => row.join('|') === 'Response|404|1')],
    ['issues-overview', rows => rows.length > 0 && rows.every(row => Number(row[1]) <= 6)],
    ['header-summary', rows => rows.some(row => row.join('|') === 'content-type|6') && rows.every(row => row.length === 2)],
+   ['insecure-content', rows => rows.length === 0],
+   ['orphan-pages', rows => rows.some(row => row[0] === origin+'/wrong') && rows.every(row => row[0] !== origin+'/he' && row[0] !== origin+'/en')],
    ['serp-summary', rows => rows.length === 5 && rows.filter(row => row[1] === 'דוחות שפה').length === 4 && rows.some(row => row[1] === '=1+1')],
  ]) {
    await region.getByLabel('Search report',{exact:true}).fill('');
