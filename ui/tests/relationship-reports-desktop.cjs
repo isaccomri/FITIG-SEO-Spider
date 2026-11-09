@@ -33,5 +33,20 @@ const server=http.createServer((req,res)=>{requests++;res.setHeader('Connection'
  await region.getByText('Saved: '+safeCsv,{exact:true}).waitFor();
  check(fs.readFileSync(safeCsv,'utf8').includes(",'=1+1,"),'SERP CSV escapes formula-like titles');
  check(fs.readFileSync(db).equals(before)&&requests===count,'Summary reports preserve the saved crawl and make no HTTP requests');
+ const providerFixtures=[
+   ['psi','pagespeed-summary',{id:origin+'/he',lighthouseResult:{audits:{'largest-contentful-paint':{numericValue:1250},'cumulative-layout-shift':{numericValue:0}}}},['','1250','0']],
+   ['gsc','search-console-summary',{rows:[{keys:[origin+'/he'],clicks:0,impressions:9,ctr:0,position:2.5}]},['0','9','0','2.5']],
+   ['ga4','analytics-summary',{metricHeaders:[{name:'sessions'}],rows:[{dimensionValues:[{value:origin+'/he'}],metricValues:[{value:'7'}]}]},['','7.0','']],
+ ];
+ for(const [service,kind,response,expected] of providerFixtures){
+   await invoke('import_google_response',{service,property:'fixture',start:'2026-01-01',end:'2026-01-02',strategy:'mobile',response,urls:null});
+   await region.getByLabel('Search report',{exact:true}).fill('');
+   await region.getByLabel('Report variant',{exact:true}).selectOption(kind);
+   await region.getByRole('button',{name:'Generate saved-crawl report',exact:true}).click();
+   await region.getByText('1 matching rows of 1',{exact:true}).waitFor();
+   const result=await invoke('get_path_report',{kind});
+   check(result.rows[0][0]===origin+'/he'&&expected.every((value,index)=>value===''?result.rows[0][index+1]==='':result.rows[0][index+1]!==''&&Number(result.rows[0][index+1])===Number(value)),'Saved provider report '+kind+' preserves imported metrics and blanks');
+ }
+ check(requests===count,'Imported provider summaries make no HTTP requests');
 fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({checks},null,2));
  });}finally{await new Promise(resolve=>server.close(resolve))}})().catch(error=>{console.error(error);process.exitCode=1});

@@ -29,3 +29,5 @@ Row 145 is partially tested in 0.1.54 for explicit standard HTTP forms. Interact
 0.1.62 adds JSON-LD summary, validation findings and parse errors. Row 155 remains pending for full report coverage and exact output comparisons. The Windows certificate stores contained zero current code-signing certificates with private keys when checked.
 
 0.1.63 adds JavaScript console, mobile and accessibility summaries. Full report coverage and exact comparison remain pending under row 155.
+
+0.1.64 adds three saved provider metrics reports. PageSpeed opportunities and coverage need audit data beyond the measurements retained by the current import. Row 155 remains pending.

@@ -1,13 +1,22 @@
 use crate::{path_reports::Report, Page, Result};
 use std::collections::{BTreeMap, BTreeSet};
 
-pub const KINDS: [&str; 12] = [
+pub const KINDS: [&str; 15] = [
     "crawl-overview", "issues-overview", "header-summary", "serp-summary",
     "insecure-content", "orphan-pages", "json-ld-findings", "json-ld-parse-errors", "json-ld-summary",
     "console-summary", "mobile-summary", "accessibility-summary",
+    "pagespeed-summary", "search-console-summary", "analytics-summary",
 ];
 
 pub fn load(db: &str, kind: &str) -> Result<Report> {
+    if let Some(service) = match kind {
+        "pagespeed-summary" => Some("psi"),
+        "search-console-summary" => Some("gsc"),
+        "analytics-summary" => Some("ga4"),
+        _ => None,
+    } {
+        return Ok(provider_summary(kind, service, crate::integrations::load_report(db, service)?));
+    }
     if matches!(kind, "json-ld-findings" | "json-ld-parse-errors" | "json-ld-summary") {
         let audit = crate::structured_data::analyze(db, Default::default())?;
         let (headers, rows, truncated) = if kind == "json-ld-summary" {
@@ -56,6 +65,38 @@ pub fn load(db: &str, kind: &str) -> Result<Report> {
         });
     }
     build(&crate::load_project_data(db)?.pages, kind)
+}
+
+fn provider_summary(kind: &str, service: &str, saved: Option<crate::integrations::ApiReport>) -> Report {
+    let columns: &[(&str, &str)] = match service {
+        "psi" => &[
+            ("performance_score", "Performance score"), ("lcp_ms", "LCP (ms)"),
+            ("cls", "CLS"), ("tbt_ms", "TBT (ms)"), ("fcp_ms", "FCP (ms)"),
+            ("speed_index_ms", "Speed index (ms)"),
+        ],
+        "gsc" => &[("clicks", "Clicks"), ("impressions", "Impressions"), ("ctr", "CTR (fraction)"), ("position", "Average position")],
+        _ => &[("screenPageViews", "Views"), ("sessions", "Sessions"), ("totalUsers", "Users")],
+    };
+    let mut headers = vec!["URL".into()];
+    headers.extend(columns.iter().map(|(_, label)| (*label).into()));
+    let mut report = Report {
+        kind: kind.into(), headers, rows: Vec::new(), truncated: false,
+        scope: "No saved provider report. Import or fetch results in Integrations first.".into(),
+    };
+    if let Some(saved) = saved {
+        report.scope = format!("Saved provider results. Scope: {}. Period: {} to {}. Strategy: {}. Blank cells mean the metric is unavailable.",
+            saved.property, saved.start, saved.end, saved.strategy);
+        report.truncated = saved.truncated || saved.rows.len() > 50_000;
+        report.rows = saved.rows.into_iter().take(50_000).map(|row| {
+            let mut cells = vec![row.url];
+            cells.extend(columns.iter().map(|(key, _)| {
+                row.metrics.get(*key).and_then(serde_json::Value::as_number)
+                    .map(ToString::to_string).unwrap_or_default()
+            }));
+            cells
+        }).collect();
+    }
+    report
 }
 
 fn build(pages: &[Page], kind: &str) -> Result<Report> {
@@ -168,6 +209,23 @@ fn build(pages: &[Page], kind: &str) -> Result<Report> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn provider_summary_preserves_missing_and_zero_metrics() {
+        use crate::integrations::{ApiReport, ApiRow};
+        let source = ApiReport {
+            service: "psi".into(), property: "fixture".into(), start: String::new(),
+            end: String::new(), strategy: "mobile".into(), truncated: true, note: String::new(),
+            rows: vec![ApiRow {
+                url: "https://example.test/".into(),
+                metrics: BTreeMap::from([("cls".into(), serde_json::json!(0)), ("lcp_ms".into(), serde_json::json!(1250))]),
+            }],
+        };
+        let report = provider_summary("pagespeed-summary", "psi", Some(source));
+        assert!(report.truncated);
+        assert_eq!(&report.rows[0][1..4], ["", "1250", "0"]);
+        assert!(provider_summary("pagespeed-summary", "psi", None).rows.is_empty());
+    }
 
     #[test]
     fn browser_summaries_preserve_zero_and_unavailable_counts() {
