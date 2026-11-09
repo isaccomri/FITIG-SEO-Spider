@@ -1,9 +1,42 @@
 use crate::{path_reports::Report, Page, Result};
 use std::collections::{BTreeMap, BTreeSet};
 
-pub const KINDS: [&str; 6] = ["crawl-overview", "issues-overview", "header-summary", "serp-summary", "insecure-content", "orphan-pages"];
+pub const KINDS: [&str; 9] = [
+    "crawl-overview", "issues-overview", "header-summary", "serp-summary",
+    "insecure-content", "orphan-pages", "json-ld-findings", "json-ld-parse-errors", "json-ld-summary",
+];
 
 pub fn load(db: &str, kind: &str) -> Result<Report> {
+    if matches!(kind, "json-ld-findings" | "json-ld-parse-errors" | "json-ld-summary") {
+        let audit = crate::structured_data::analyze(db, Default::default())?;
+        let (headers, rows, truncated) = if kind == "json-ld-summary" {
+            let summary = audit.summary;
+            let rows = [
+                ("Pages with JSON-LD", summary.pages_with_json_ld),
+                ("JSON-LD blocks", summary.blocks),
+                ("Entities", summary.entities),
+                ("Parse or document errors", summary.parse_errors),
+                ("Errors", summary.errors),
+                ("Warnings", summary.warnings),
+                ("Unvalidated terms", summary.unvalidated_terms),
+            ].into_iter().map(|(metric, count)| vec![metric.into(), count.to_string()]).collect();
+            (vec!["Metric", "Count"], rows, false)
+        } else {
+            let rows = audit.findings.into_iter().filter(|finding| {
+                kind != "json-ld-parse-errors" || matches!(finding.code.as_str(), "PARSE_ERROR" | "INVALID_DOCUMENT")
+            }).map(|finding| vec![
+                finding.url, finding.block.to_string(), finding.pointer, finding.severity,
+                finding.code, finding.term, finding.message,
+            ]).collect();
+            (vec!["URL", "Block", "JSON pointer", "Severity", "Code", "Term", "Message"], rows, audit.summary.truncated)
+        };
+        return Ok(Report {
+            kind: kind.into(),
+            headers: headers.into_iter().map(String::from).collect(),
+            rows, truncated,
+            scope: format!("Saved JSON-LD. {} {}", audit.note, audit.attribution),
+        });
+    }
     if kind == "orphan-pages" {
         let analysis = crate::link_analysis::project(db)?;
         let mut rows: Vec<_> = analysis.rows.into_iter().filter(|row| row.orphan_candidate)

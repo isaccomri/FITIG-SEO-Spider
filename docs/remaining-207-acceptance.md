@@ -25,3 +25,5 @@ Row 145 is partially tested in 0.1.54 for explicit standard HTTP forms. Interact
 0.1.59 adds seven hreflang and two pagination report variants; fifteen dedicated report variants now have native verification. Remaining report families and exact competitor comparisons still prevent closing row 155.
 
 0.1.61 has 21 dedicated report variants. Row 155 remains pending for the remaining report families and exact comparison against the installed competitor.
+
+0.1.62 adds JSON-LD summary, validation findings and parse errors. Row 155 remains pending for full report coverage and exact output comparisons. The Windows certificate stores contained zero current code-signing certificates with private keys when checked.
