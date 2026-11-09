@@ -14,6 +14,9 @@ const server=http.createServer((req,res)=>{requests++;res.setHeader('Connection'
    ['json-ld-summary', rows => rows.some(row => row.join('|') === 'Parse or document errors|1')],
    ['json-ld-findings', rows => rows.some(row => row[4] === 'PARSE_ERROR')],
    ['json-ld-parse-errors', rows => rows.length === 1 && rows[0][4] === 'PARSE_ERROR'],
+   ['console-summary', rows => rows.length === 0],
+   ['mobile-summary', rows => rows.length === 0],
+   ['accessibility-summary', rows => rows.length === 0],
    ['serp-summary', rows => rows.length === 5 && rows.filter(row => row[1] === 'דוחות שפה').length === 4 && rows.some(row => row[1] === '=1+1')],
  ]) {
    await region.getByLabel('Search report',{exact:true}).fill('');

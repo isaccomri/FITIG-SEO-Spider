@@ -1,9 +1,10 @@
 use crate::{path_reports::Report, Page, Result};
 use std::collections::{BTreeMap, BTreeSet};
 
-pub const KINDS: [&str; 9] = [
+pub const KINDS: [&str; 12] = [
     "crawl-overview", "issues-overview", "header-summary", "serp-summary",
     "insecure-content", "orphan-pages", "json-ld-findings", "json-ld-parse-errors", "json-ld-summary",
+    "console-summary", "mobile-summary", "accessibility-summary",
 ];
 
 pub fn load(db: &str, kind: &str) -> Result<Report> {
@@ -59,6 +60,35 @@ pub fn load(db: &str, kind: &str) -> Result<Report> {
 
 fn build(pages: &[Page], kind: &str) -> Result<Report> {
     let (headers, mut rows, scope) = match kind {
+        "console-summary" | "mobile-summary" | "accessibility-summary" => {
+            let (primary, secondary) = match kind {
+                "console-summary" => ("Captured entries", "Errors and exceptions"),
+                "mobile-summary" => ("Findings", ""),
+                _ => ("Violation rules", "Rules needing review"),
+            };
+            let rows = pages.iter().filter_map(|page| {
+                let (count, extra, error, partial) = match kind {
+                    "console-summary" => (page.console_count, page.console_errors, &page.console_error, false),
+                    "mobile-summary" => (page.mobile_findings, None, &page.mobile_error, page.mobile_truncated),
+                    _ => (page.accessibility_violations, page.accessibility_review, &page.accessibility_error, page.accessibility_truncated),
+                };
+                if count.is_none() && extra.is_none() && error.is_empty() && !partial {
+                    return None;
+                }
+                let mut row = vec![page.url.clone(), count.map(|value| value.to_string()).unwrap_or_default()];
+                if !secondary.is_empty() {
+                    row.push(extra.map(|value| value.to_string()).unwrap_or_default());
+                }
+                row.extend([error.clone(), if partial { "Partial details" } else { "" }.into()]);
+                Some(row)
+            }).take(50_001).collect();
+            let mut headers = vec!["URL", primary];
+            if !secondary.is_empty() {
+                headers.push(secondary);
+            }
+            headers.extend(["Capture diagnostic", "Detail coverage"]);
+            (headers, rows, "Saved browser observations. Pages without recorded observations are omitted. Blank counts mean unavailable; zero means a measured count of zero.")
+        }
         "crawl-overview" => {
             let mut counts = BTreeMap::new();
             counts.insert(("Scope", "All URLs".to_owned()), pages.len());
@@ -138,6 +168,27 @@ fn build(pages: &[Page], kind: &str) -> Result<Report> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn browser_summaries_preserve_zero_and_unavailable_counts() {
+        let unmeasured = Page { url: "https://example.test/unknown".into(), ..Default::default() };
+        let measured = Page {
+            url: "https://example.test/measured".into(),
+            console_count: Some(0), console_errors: Some(0),
+            mobile_error: "Audit timed out".into(),
+            accessibility_violations: Some(0), accessibility_review: Some(2),
+            accessibility_truncated: true,
+            ..Default::default()
+        };
+        let pages = [unmeasured, measured];
+        let console = build(&pages, "console-summary").unwrap();
+        assert_eq!(console.rows.len(), 1);
+        assert_eq!(&console.rows[0][1..3], ["0", "0"]);
+        let mobile = build(&pages, "mobile-summary").unwrap();
+        assert_eq!(&mobile.rows[0][1..3], ["", "Audit timed out"]);
+        let accessibility = build(&pages, "accessibility-summary").unwrap();
+        assert_eq!(&accessibility.rows[0][1..], ["0", "2", "", "Partial details"]);
+    }
 
     #[test]
     fn insecure_report_keeps_unique_http_references_from_https_pages() {

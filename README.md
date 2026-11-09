@@ -1,12 +1,12 @@
 # FITIG SEO Spider
 
-Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.62**.
+Independent Windows SEO crawl workbench using Rust, Tauri 2, React, TypeScript and SQLite. Source baseline: **0.1.63**.
 
 ## Status
 
 196 of 207 tracked entries (94.7%) have partial implementation/test evidence. This measures matrix coverage, **not full Screaming Frog parity**. See [feature matrix](docs/feature-parity-matrix.md) and [scope and limitations](docs/milestone-90-coverage.md). This repository snapshot does not include private crawl data, credentials, installed competitor files, acceptance recordings or local build logs.
 
-The local 0.1.62 release adds three JSON-LD reports, for 24 report variants. See [release notes](docs/release-0.1.62.md).
+The local 0.1.63 release adds three browser audit summaries, for 27 report variants. See [release notes](docs/release-0.1.63.md).
 
 ## Build on Windows 11
 
@@ -33,4 +33,4 @@ This is an independent implementation. No proprietary competitor code, artwork, 
 
 ## Latest release
 
-[Download the Windows x64 installer](https://github.com/isaccomri/FITIG-SEO-Spider/releases/tag/v0.1.62). [Release notes](docs/release-0.1.62.md). Consult GitHub Actions separately for CI status.
+[Download the Windows x64 installer](https://github.com/isaccomri/FITIG-SEO-Spider/releases/tag/v0.1.63). [Release notes](docs/release-0.1.63.md). Consult GitHub Actions separately for CI status.
